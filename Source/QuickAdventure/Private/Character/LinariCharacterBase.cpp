@@ -1,16 +1,15 @@
 // Copyright Dawid Harendarz.
 
 
-#include "Character/LucarCharacterBase.h"
-
+#include "Character/LinariCharacterBase.h"
 
 // Sets default values
-ALucarCharacterBase::ALucarCharacterBase()
+ALinariCharacterBase::ALinariCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void ALucarCharacterBase::BeginPlay()
+void ALinariCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 }

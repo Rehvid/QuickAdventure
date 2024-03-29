@@ -4,15 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "LucarCharacterBase.generated.h"
+#include "LinariCharacterBase.generated.h"
 
 UCLASS(Abstract)
-class QUICKADVENTURE_API ALucarCharacterBase : public ACharacter
+class QUICKADVENTURE_API ALinariCharacterBase : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	ALucarCharacterBase();
+	ALinariCharacterBase();
 
 protected:
 	virtual void BeginPlay() override;
