@@ -33,12 +33,25 @@ private:
 	TObjectPtr<UInputAction> MoveAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> RunAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> LookAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> CrouchAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> DodgeAction;
 	
 	void Move(const FInputActionValue& InputActionValue);
+	void StartRunning(const FInputActionValue& InputActionValue);
+	void StopRunning(const FInputActionValue& InputActionValue); 
 	void Look(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
+	void Crouch(const FInputActionValue& InputActionValue);
+	void Dodge(const FInputActionValue& InputActionValue);
 };
