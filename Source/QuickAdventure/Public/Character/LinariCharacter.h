@@ -35,10 +35,10 @@ private:
 	void Look(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
 	void Crouch(const FInputActionValue& InputActionValue);
-	void Dodge(const FInputActionValue& InputActionValue);
+	void Dodge();
 
 	/* Animations Montages Functions */
-	void PlayDodgeMontage(FName SectionName);
+	void PlayDodgeMontage();
 
 	/* Enhanced Input Properties */
 	UPROPERTY(EditAnywhere, Category = "Input")
