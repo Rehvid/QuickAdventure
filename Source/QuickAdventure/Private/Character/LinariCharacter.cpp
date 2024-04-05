@@ -3,6 +3,7 @@
 #include "Character/LinariCharacter.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 void ALinariCharacter::BeginPlay()
@@ -57,12 +58,14 @@ void ALinariCharacter::Move(const FInputActionValue& InputActionValue)
 	AddMovementInput(RightDirection, InputAxisVector.X);
 }
 
-void ALinariCharacter::StartRunning(const FInputActionValue& InputActionValue)
+void ALinariCharacter::StartRunning()
 {
+	GetCharacterMovement()->MaxWalkSpeed = RunningSpeed;
 }
 
-void ALinariCharacter::StopRunning(const FInputActionValue& InputActionValue)
+void ALinariCharacter::StopRunning()
 {
+	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
 }
 
 void ALinariCharacter::Look(const FInputActionValue& InputActionValue)

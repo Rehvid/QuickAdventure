@@ -30,8 +30,8 @@ private:
 	void InitializeMappingContext();
 	void InitializeEnhancedInputActions(UInputComponent* PlayerInputComponent);
 	void Move(const FInputActionValue& InputActionValue);
-	void StartRunning(const FInputActionValue& InputActionValue);
-	void StopRunning(const FInputActionValue& InputActionValue); 
+	void StartRunning();
+	void StopRunning(); 
 	void Look(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
 	void Crouch(const FInputActionValue& InputActionValue);
@@ -40,6 +40,13 @@ private:
 	/* Animations Montages Functions */
 	void PlayDodgeMontage();
 
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	double WalkingSpeed = 300.f;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	double RunningSpeed = 450.f;
+	
+	
 	/* Enhanced Input Properties */
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> MappingContext;
