@@ -1,8 +1,7 @@
 // Copyright Dawid Harendarz.
 
-#include "Animation/AnimMontage.h"
 #include "..\..\Public\Character\CharacterBase.h"
-
+#include "Animation/AnimMontage.h"
 
 ACharacterBase::ACharacterBase()
 {

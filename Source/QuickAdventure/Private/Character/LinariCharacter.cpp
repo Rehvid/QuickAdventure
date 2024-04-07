@@ -60,12 +60,21 @@ void ALinariCharacter::Move(const FInputActionValue& InputActionValue)
 
 void ALinariCharacter::StartRunning()
 {
-	GetCharacterMovement()->MaxWalkSpeed = RunningSpeed;
+	if (!IsRunning())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = RunningSpeed;
+		CharacterState = ELinariCharacterState::ELCS_Running;
+	}
 }
 
 void ALinariCharacter::StopRunning()
 {
-	GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+	if (IsRunning())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+		CharacterState = ELinariCharacterState::ELCS_Walking;
+	}
+	
 }
 
 void ALinariCharacter::Look(const FInputActionValue& InputActionValue)
@@ -98,4 +107,19 @@ void ALinariCharacter::PlayDodgeMontage()
 	{
 		PlayMontageSection(DodgeAnimMontage, FName("Default"));
 	}
+}
+
+bool ALinariCharacter::IsUnoccupied() const
+{
+	return CharacterState == ELinariCharacterState::ELCS_Unoccupied;
+}
+
+bool ALinariCharacter::IsRunning() const
+{
+	return CharacterState == ELinariCharacterState::ELCS_Running;
+}
+
+bool ALinariCharacter::IsWalking() const
+{
+	return CharacterState == ELinariCharacterState::ELCS_Walking;
 }
