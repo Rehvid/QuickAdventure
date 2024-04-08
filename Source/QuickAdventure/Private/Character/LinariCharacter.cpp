@@ -42,6 +42,8 @@ void ALinariCharacter::InitializeEnhancedInputActions(UInputComponent* PlayerInp
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Look);
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Jump);
 	EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Dodge);
+	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Crouch);
+	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ALinariCharacter::UnCrouch);
 }
 
 
@@ -94,6 +96,12 @@ void ALinariCharacter::Jump(const FInputActionValue& InputActionValue)
 
 void ALinariCharacter::Crouch(const FInputActionValue& InputActionValue)
 {
+	Super::Crouch();
+}
+
+void ALinariCharacter::UnCrouch()
+{
+	Super::UnCrouch();
 }
 
 void ALinariCharacter::Dodge()

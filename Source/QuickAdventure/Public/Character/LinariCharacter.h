@@ -35,6 +35,7 @@ private:
 	void Look(const FInputActionValue& InputActionValue);
 	void Jump(const FInputActionValue& InputActionValue);
 	void Crouch(const FInputActionValue& InputActionValue);
+	void UnCrouch();
 	void Dodge();
 
 	/* Animations Montages Functions */
