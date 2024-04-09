@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
+
 void ALinariCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -91,17 +92,27 @@ void ALinariCharacter::Look(const FInputActionValue& InputActionValue)
 
 void ALinariCharacter::Jump(const FInputActionValue& InputActionValue)
 {
-	Super::Jump();
+	if (GetCharacterMovement())
+	{
+		Super::Jump();
+	}
 }
 
 void ALinariCharacter::Crouch(const FInputActionValue& InputActionValue)
 {
-	Super::Crouch();
+	if (GetCharacterMovement())
+	{
+		Super::Crouch();
+	}
+
 }
 
 void ALinariCharacter::UnCrouch()
 {
-	Super::UnCrouch();
+	if (GetCharacterMovement())
+	{
+		Super::UnCrouch();
+	}
 }
 
 void ALinariCharacter::Dodge()
