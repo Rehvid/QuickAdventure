@@ -1,7 +1,7 @@
 // Copyright Dawid Harendarz.
 
-#include "GeometryCollection/GeometryCollectionComponent.h"
 #include "Breakable/BreakableActor.h"
+#include "GeometryCollection/GeometryCollectionComponent.h"
 #include "Components/CapsuleComponent.h"
 
 ABreakableActor::ABreakableActor()
