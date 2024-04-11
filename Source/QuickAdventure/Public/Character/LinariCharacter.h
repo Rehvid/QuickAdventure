@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "CharacterBase.h"
 #include "LinariCharacterTypes.h"
+#include "Interface/ItemInterface.h"
 #include "LinariCharacter.generated.h"
 
 class AItemBase;
@@ -19,9 +20,12 @@ struct FInputActionValue;
  * 
  */
 UCLASS()
-class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase
+class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase, public IItemInterface
 {
 	GENERATED_BODY()
+
+public:
+	virtual void SetOverlappingItem(AItemBase* Item) override;
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;

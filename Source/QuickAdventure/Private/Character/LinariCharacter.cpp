@@ -4,6 +4,13 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Item/ItemBase.h"
+#include "Item/Weapon/Weapon.h"
+
+void ALinariCharacter::SetOverlappingItem(AItemBase* Item)
+{
+	OverlappingItem = Item;
+}
 
 void ALinariCharacter::BeginPlay()
 {
@@ -121,9 +128,12 @@ void ALinariCharacter::Dodge()
 
 void ALinariCharacter::EKeyPressed(const FInputActionValue& InputActionValue)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Clicked"));
+	if (AWeapon* Weapon = Cast<AWeapon>(OverlappingItem))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Overllaped"));
 
-	//TODO: Later
+		//TODO: Attach a weapon to the character
+	}
 }
 
 void ALinariCharacter::PlayDodgeMontage()

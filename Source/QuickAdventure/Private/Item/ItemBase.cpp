@@ -3,6 +3,7 @@
 #include "Item/ItemBase.h"
 
 #include "Components/SphereComponent.h"
+#include "Interface/ItemInterface.h"
 
 AItemBase::AItemBase()
 {
@@ -38,7 +39,10 @@ void AItemBase::OnSphereOverlap(
 	bool bFromSweep,
 	const FHitResult& SweepResult
 ) {
-	UE_LOG(LogTemp, Warning, TEXT("Start Overlapping"));	
+	if (IItemInterface* ItemInterface = Cast<IItemInterface>(OtherActor))
+	{
+		ItemInterface->SetOverlappingItem(this);
+	}
 }
 
 void AItemBase::OnSphereEndOverlap(
@@ -47,6 +51,9 @@ void AItemBase::OnSphereEndOverlap(
 	UPrimitiveComponent* OtherComp,
 	int32 OtherBodyIndex
 ) {
-	UE_LOG(LogTemp, Warning, TEXT("End Overlapping"));
+	if (IItemInterface* ItemInterface = Cast<IItemInterface>(OtherActor))
+	{
+		ItemInterface->SetOverlappingItem(nullptr);
+	}
 }
 
