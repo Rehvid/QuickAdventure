@@ -7,6 +7,7 @@
 #include "LinariCharacterTypes.h"
 #include "LinariCharacter.generated.h"
 
+class AItemBase;
 class UInputComponent;
 class UInputMappingContext;
 class UInputAction;
@@ -37,6 +38,7 @@ private:
 	void Crouch(const FInputActionValue& InputActionValue);
 	void UnCrouch();
 	void Dodge();
+	void EKeyPressed(const FInputActionValue& InputActionValue);
 
 	/* Animations Montages Functions */
 	void PlayDodgeMontage();
@@ -47,6 +49,9 @@ private:
 	
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	ELinariCharacterState CharacterState = ELinariCharacterState::ELCS_Unoccupied;
+
+	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
+	TObjectPtr<AItemBase> OverlappingItem;
 	
 	/* Enhanced Input Properties */
 	UPROPERTY(EditAnywhere, Category = "EnhancedInput")
@@ -66,6 +71,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "EnhancedInput | Movement")
 	TObjectPtr<UInputAction> CrouchAction;
+
+	UPROPERTY(EditAnywhere, Category = "EnhancedInput | Action")
+	TObjectPtr<UInputAction> EKeyPressedAction;
 
 	UPROPERTY(EditAnywhere, Category = "EnhancedInput | Combat")
 	TObjectPtr<UInputAction> DodgeAction;

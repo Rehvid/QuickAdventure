@@ -5,8 +5,6 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-
-
 void ALinariCharacter::BeginPlay()
 {
 	Super::BeginPlay();
@@ -45,6 +43,7 @@ void ALinariCharacter::InitializeEnhancedInputActions(UInputComponent* PlayerInp
 	EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Dodge);
 	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ALinariCharacter::Crouch);
 	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ALinariCharacter::UnCrouch);
+	EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &ALinariCharacter::EKeyPressed);
 }
 
 
@@ -118,6 +117,13 @@ void ALinariCharacter::UnCrouch()
 void ALinariCharacter::Dodge()
 {
 	PlayDodgeMontage();
+}
+
+void ALinariCharacter::EKeyPressed(const FInputActionValue& InputActionValue)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Clicked"));
+
+	//TODO: Later
 }
 
 void ALinariCharacter::PlayDodgeMontage()
