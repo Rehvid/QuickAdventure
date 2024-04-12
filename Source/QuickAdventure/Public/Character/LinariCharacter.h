@@ -8,6 +8,7 @@
 #include "Interface/ItemInterface.h"
 #include "LinariCharacter.generated.h"
 
+class AWeapon;
 class AItemBase;
 class UInputComponent;
 class UInputMappingContext;
@@ -43,7 +44,8 @@ private:
 	void UnCrouch();
 	void Dodge();
 	void EKeyPressed(const FInputActionValue& InputActionValue);
-
+	void EquipWeapon(AWeapon* Weapon);
+	
 	/* Animations Montages Functions */
 	void PlayDodgeMontage();
 
@@ -56,6 +58,9 @@ private:
 
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;
+
+	UPROPERTY(VisibleAnywhere, Category = "Weapon")
+	TObjectPtr<AWeapon> EquippedWeapon;
 	
 	/* Enhanced Input Properties */
 	UPROPERTY(EditAnywhere, Category = "EnhancedInput")

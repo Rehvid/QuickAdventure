@@ -128,12 +128,19 @@ void ALinariCharacter::Dodge()
 
 void ALinariCharacter::EKeyPressed(const FInputActionValue& InputActionValue)
 {
-	if (AWeapon* Weapon = Cast<AWeapon>(OverlappingItem))
+	AWeapon* Weapon = Cast<AWeapon>(OverlappingItem);
+	
+	if (Weapon)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Overllaped"));
-
-		//TODO: Attach a weapon to the character
+		EquipWeapon(Weapon);
 	}
+}
+
+void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
+{
+	Weapon->Equip(GetMesh());
+	EquippedWeapon = Weapon;
+	OverlappingItem = nullptr;
 }
 
 void ALinariCharacter::PlayDodgeMontage()
