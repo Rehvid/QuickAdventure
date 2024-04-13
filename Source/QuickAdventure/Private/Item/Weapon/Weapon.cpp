@@ -19,7 +19,7 @@ AWeapon::AWeapon()
 
 void AWeapon::Equip(USceneComponent* Parent)
 {
-	FAttachmentTransformRules TransformRules(EAttachmentRule::SnapToTarget, true);
+	FAttachmentTransformRules const TransformRules(EAttachmentRule::SnapToTarget, true);
 	AttachToComponent(Parent, TransformRules, FName("RightHandSocket"));
 }
 
