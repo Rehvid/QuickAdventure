@@ -17,7 +17,7 @@ class QUICKADVENTURE_API AWeapon : public AItemBase
 
 public:
 	AWeapon();
-	void Equip(USceneComponent* Parent);
+	void Equip(USceneComponent* Parent, FName const SocketName);
 	
 protected:
 	virtual void BeginPlay() override;

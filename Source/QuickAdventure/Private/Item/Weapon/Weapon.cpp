@@ -17,10 +17,10 @@ AWeapon::AWeapon()
 	BoxTraceEnd->SetupAttachment(GetRootComponent());
 }
 
-void AWeapon::Equip(USceneComponent* Parent)
+void AWeapon::Equip(USceneComponent* Parent, FName const SocketName)
 {
 	FAttachmentTransformRules const TransformRules(EAttachmentRule::SnapToTarget, true);
-	AttachToComponent(Parent, TransformRules, FName("RightHandSocket"));
+	AttachToComponent(Parent, TransformRules, SocketName);
 }
 
 void AWeapon::BeginPlay()

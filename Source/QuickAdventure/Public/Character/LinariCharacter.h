@@ -39,7 +39,7 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Weapon")
 	TObjectPtr<AWeapon> EquippedWeapon;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages | Combat")
+	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> DodgeAnimMontage;
 	
 	void PlayDodgeMontage();

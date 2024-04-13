@@ -24,7 +24,7 @@ void ALinariCharacter::EKeyPressed()
 
 void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 {
-	Weapon->Equip(GetMesh());
+	Weapon->Equip(GetMesh(), RightHandSocketName);
 	EquippedWeapon = Weapon;
 	OverlappingItem = nullptr;
 }
@@ -33,7 +33,7 @@ void ALinariCharacter::PlayDodgeMontage()
 {
 	if (DodgeAnimMontage)
 	{
-		PlayMontageSection(DodgeAnimMontage, FName("Default"));
+		PlayMontageSection(DodgeAnimMontage, DefaultSection);
 	}
 }
 

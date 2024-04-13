@@ -15,6 +15,12 @@ public:
 	ACharacterBase();
 
 protected:
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName RightHandSocketName;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	FName DefaultSection;
+	
 	virtual void BeginPlay() override;
 	virtual void PlayMontageSection(UAnimMontage* Montage, const FName& SectionName);
 };
