@@ -1,6 +1,7 @@
 // Copyright Dawid Harendarz.
 
 #include "Character/LinariCharacter.h"
+
 #include "Item/ItemBase.h"
 #include "Item/Weapon/Weapon.h"
 
@@ -39,15 +40,5 @@ void ALinariCharacter::PlayDodgeMontage()
 
 bool ALinariCharacter::IsUnoccupied() const
 {
-	return CharacterState == ELinariCharacterState::ELCS_Unoccupied;
-}
-
-bool ALinariCharacter::IsRunning() const
-{
-	return CharacterState == ELinariCharacterState::ELCS_Running;
-}
-
-bool ALinariCharacter::IsWalking() const
-{
-	return CharacterState == ELinariCharacterState::ELCS_Walking;
+	return CharacterState == ECharacterState::ELCS_Unoccupied;
 }

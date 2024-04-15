@@ -36,13 +36,12 @@ void ALinariPlayerController::SetupInputComponent()
 	
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Look);
 	
-	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::StartJump);
+	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Jump);
 
-	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::StartCrouching);
+	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &ALinariPlayerController::StartCrouching);
 	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ALinariPlayerController::StopCrouching);
 	
 	EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Dodge);
-	
 	EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::EKeyPressed);
 }
 
@@ -61,17 +60,17 @@ void ALinariPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void ALinariPlayerController::StartRunning()
 {
-	if (ControlledPawn->GetCharacterMovement())
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
 	{
-		ControlledPawn->GetCharacterMovement()->MaxWalkSpeed = RunningSpeed;
+        SetCharacterMovementMaxWalkSpeed(RunningSpeed);
 	}
 }
 
 void ALinariPlayerController::StopRunning()
 {
-	if (ControlledPawn->GetCharacterMovement())
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
 	{
-		ControlledPawn->GetCharacterMovement()->MaxWalkSpeed = WalkingSpeed;
+		SetCharacterMovementMaxWalkSpeed(WalkingSpeed);
 	}
 }
 
@@ -82,27 +81,51 @@ void ALinariPlayerController::Look(const FInputActionValue& InputActionValue)
 	AddYawInput(LookVector.X);
 }
 
-void ALinariPlayerController::StartJump()
+void ALinariPlayerController::Jump()
 {
-	ControlledPawn->Jump();
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
+	{
+		ControlledPawn->Jump();
+	}
 }
+
 
 void ALinariPlayerController::StartCrouching()
 {
-	ControlledPawn->Crouch();
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
+	{
+		ControlledPawn->Crouch();
+	}
 }
 
 void ALinariPlayerController::StopCrouching()
 {
-	ControlledPawn->UnCrouch();
+	if (ControlledPawn->GetMovementComponent()->IsCrouching())
+	{
+        ControlledPawn->UnCrouch();
+	}
 }
 
 void ALinariPlayerController::Dodge()
 {
-	ControlledPawn->Dodge();
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
+	{
+		ControlledPawn->Dodge();
+	}
 }
 
 void ALinariPlayerController::EKeyPressed()
 {
-	ControlledPawn->EKeyPressed();
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround() && !ControlledPawn->GetMovementComponent()->IsCrouching())
+	{
+		ControlledPawn->EKeyPressed();
+	}
+}
+
+void ALinariPlayerController::SetCharacterMovementMaxWalkSpeed(const double Speed) const
+{
+	if (ControlledPawn->GetCharacterMovement())
+	{
+		ControlledPawn->GetCharacterMovement()->MaxWalkSpeed = Speed;
+	}
 }

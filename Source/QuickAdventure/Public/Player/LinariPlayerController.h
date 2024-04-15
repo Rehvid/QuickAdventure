@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "LinariPlayerController.generated.h"
 
+enum class ECharacterMovementState : uint8;
 class ALinariCharacter;
 struct FInputActionValue;
 class UInputAction;
@@ -59,9 +60,10 @@ private:
 	void StartRunning();
 	void StopRunning(); 
 	void Look(const FInputActionValue& InputActionValue);
-	void StartJump();
+	void Jump();
 	void StartCrouching();
 	void StopCrouching();
 	void Dodge();
 	void EKeyPressed();
+	void SetCharacterMovementMaxWalkSpeed(const double Speed) const;
 };

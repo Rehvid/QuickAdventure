@@ -17,6 +17,14 @@ class UAnimMontage;
 
 struct FInputActionValue;
 
+UENUM(BlueprintType)
+enum class ECharacterState : uint8
+{
+	ELCS_Unoccupied UMETA(DisplayName = "Unoccupied"),
+	ELCS_EquippedWeapon UMETA(DisplayName = "Equipped Weapon")
+};
+
+
 /**
  * 
  */
@@ -29,10 +37,12 @@ public:
 	virtual void SetOverlappingItem(AItemBase* Item) override;
 	void Dodge();
 	void EKeyPressed();
+	bool IsUnoccupied() const;
 private:
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	ELinariCharacterState CharacterState = ELinariCharacterState::ELCS_Unoccupied;
-
+	/* Character States */
+	UPROPERTY(VisibleAnywhere)
+	ECharacterState CharacterState = ECharacterState::ELCS_Unoccupied;
+	
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;
 
@@ -44,8 +54,4 @@ private:
 	
 	void PlayDodgeMontage();
 	void EquipWeapon(AWeapon* Weapon);
-	
-	bool IsUnoccupied() const;
-	bool IsRunning() const;
-	bool IsWalking() const;
 };
