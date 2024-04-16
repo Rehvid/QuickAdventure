@@ -50,6 +50,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> EKeyPressedAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> AttackAction;
+
 	UPROPERTY(EditAnywhere, Category = "Movement Properties")
 	double WalkingSpeed = 300.f;
 
@@ -65,5 +68,6 @@ private:
 	void StopCrouching();
 	void Dodge();
 	void EKeyPressed();
+	void Attack();
 	void SetCharacterMovementMaxWalkSpeed(const double Speed) const;
 };

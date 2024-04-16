@@ -42,7 +42,10 @@ void ALinariPlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ALinariPlayerController::StopCrouching);
 	
 	EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Dodge);
+	
 	EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::EKeyPressed);
+
+	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Attack);
 }
 
 void ALinariPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -120,6 +123,12 @@ void ALinariPlayerController::EKeyPressed()
 	{
 		ControlledPawn->EKeyPressed();
 	}
+}
+
+void ALinariPlayerController::Attack()
+{
+	//TODO: Call the animation montage for attacking
+	UE_LOG(LogTemp, Warning, TEXT("Attack"));
 }
 
 void ALinariPlayerController::SetCharacterMovementMaxWalkSpeed(const double Speed) const
