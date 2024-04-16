@@ -23,7 +23,6 @@ enum class ECharacterState : uint8
 	ELCS_EquippedWeapon UMETA(DisplayName = "Equipped Weapon")
 };
 
-
 /**
  * 
  */
@@ -36,12 +35,10 @@ public:
 	virtual void SetOverlappingItem(AItemBase* Item) override;
 	void Dodge();
 	void EKeyPressed();
-	bool IsUnoccupied() const;
-private:
-	/* Character States */
-	UPROPERTY(VisibleAnywhere)
+protected:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ECharacterState CharacterState = ECharacterState::ELCS_Unoccupied;
-	
+private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;
 

@@ -27,6 +27,7 @@ void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 {
 	Weapon->Equip(GetMesh(), RightHandSocketName);
 	EquippedWeapon = Weapon;
+	CharacterState = ECharacterState::ELCS_EquippedWeapon;
 	OverlappingItem = nullptr;
 }
 
@@ -38,7 +39,3 @@ void ALinariCharacter::PlayDodgeMontage()
 	}
 }
 
-bool ALinariCharacter::IsUnoccupied() const
-{
-	return CharacterState == ECharacterState::ELCS_Unoccupied;
-}
