@@ -33,8 +33,10 @@ class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase, public IItemI
 
 public:
 	virtual void SetOverlappingItem(AItemBase* Item) override;
+	
 	void Dodge();
 	void EKeyPressed();
+	void PlayAttackSection();
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ECharacterState CharacterState = ECharacterState::ELCS_Unoccupied;

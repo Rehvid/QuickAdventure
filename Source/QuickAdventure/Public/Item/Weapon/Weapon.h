@@ -6,6 +6,7 @@
 #include "Item/ItemBase.h"
 #include "Weapon.generated.h"
 
+class UAnimMontage;
 class UBoxComponent;
 /**
  * 
@@ -19,6 +20,8 @@ public:
 	AWeapon();
 	void Equip(USceneComponent* Parent, FName const SocketName);
 	
+	FORCEINLINE TObjectPtr<UAnimMontage> GetCombatMontage () const { return CombatMontage; };
+	FORCEINLINE TArray<FName> GetCombatMontageSections () const { return CombatMontageSections; };
 protected:
 	virtual void BeginPlay() override;
 	
@@ -32,5 +35,11 @@ private:
 	TObjectPtr<USceneComponent>BoxTraceStart;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
-	TObjectPtr<USceneComponent>BoxTraceEnd;	
+	TObjectPtr<USceneComponent>BoxTraceEnd;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	TObjectPtr<UAnimMontage> CombatMontage;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	TArray<FName> CombatMontageSections;
 };

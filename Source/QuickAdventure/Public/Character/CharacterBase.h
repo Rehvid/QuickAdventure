@@ -14,6 +14,7 @@ class QUICKADVENTURE_API ACharacterBase : public ACharacter
 public:
 	ACharacterBase();
 
+	virtual void PlayCombatSection(UAnimMontage* CombatMontage, const TArray<FName> CombatMontageSections);
 protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName RightHandSocketName;
@@ -23,4 +24,6 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void PlayMontageSection(UAnimMontage* Montage, const FName& SectionName);
+	
+	void PlayRandomMontageSection(UAnimMontage* Montage, const TArray<FName>& Sections);
 };

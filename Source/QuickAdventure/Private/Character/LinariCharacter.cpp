@@ -23,6 +23,14 @@ void ALinariCharacter::EKeyPressed()
 	}
 }
 
+void ALinariCharacter::PlayAttackSection()
+{
+	if (EquippedWeapon)
+	{
+		PlayCombatSection(EquippedWeapon->GetCombatMontage(), EquippedWeapon->GetCombatMontageSections());
+	}
+}
+
 void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 {
 	Weapon->Equip(GetMesh(), RightHandSocketName);
@@ -38,4 +46,6 @@ void ALinariCharacter::PlayDodgeMontage()
 		PlayMontageSection(DodgeAnimMontage, DefaultSection);
 	}
 }
+
+
 

@@ -127,8 +127,7 @@ void ALinariPlayerController::EKeyPressed()
 
 void ALinariPlayerController::Attack()
 {
-	//TODO: Call the animation montage for attacking
-	UE_LOG(LogTemp, Warning, TEXT("Attack"));
+	ControlledPawn->PlayAttackSection();
 }
 
 void ALinariPlayerController::SetCharacterMovementMaxWalkSpeed(const double Speed) const

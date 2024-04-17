@@ -24,4 +24,23 @@ void ACharacterBase::PlayMontageSection(UAnimMontage* Montage, const FName& Sect
 	}	
 }
 
+void ACharacterBase::PlayCombatSection(UAnimMontage* CombatMontage, const TArray<FName> CombatMontageSections)
+{
+	if (CombatMontage)
+	{
+		PlayRandomMontageSection(CombatMontage, CombatMontageSections);
+	}
+}
+
+void ACharacterBase::PlayRandomMontageSection(UAnimMontage* Montage, const TArray<FName>& Sections)
+{
+	if (Sections.Num() <= 0) return;
+
+	const int32 MaxSectionIndex = Sections.Num() - 1;
+	const int32 Selection = FMath::RandRange(0, MaxSectionIndex);
+	const FName SectionToPlay = Sections[Selection];
+	
+	PlayMontageSection(Montage, SectionToPlay);
+}
+
 
