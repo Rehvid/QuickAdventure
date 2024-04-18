@@ -17,10 +17,9 @@ class QUICKADVENTURE_API ATreasure : public AItemBase
 public:
 	ATreasure();
 protected:
-	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
-	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) override;
-
+	virtual void OnOverlap(AActor* TargetActor) override;
+	
 private:
 	UPROPERTY(EditAnywhere, Category = "Treasure Properties")
 	int32 Gold;

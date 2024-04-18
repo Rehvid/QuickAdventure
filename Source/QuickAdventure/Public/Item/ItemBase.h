@@ -17,15 +17,17 @@ public:
 	AItemBase();
 
 protected:
-	virtual void BeginPlay() override;
 	virtual float TransformedSin();
 
-	UFUNCTION()
-	virtual void OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UFUNCTION(BlueprintCallable)
+	virtual void OnOverlap(AActor* TargetActor);
+	
+	UFUNCTION(BlueprintCallable)
+	virtual void OnEndOverlap(AActor* TargetActor);
 
-	UFUNCTION()
-	virtual void OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
+	UFUNCTION(BlueprintCallable)
+	virtual void InitializeCollisionForMesh(UStaticMeshComponent* MeshComponent);
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sine Parameters")
 	float Amplitude = 0.25f;
 
@@ -34,10 +36,4 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Sine Parameters")
 	float RunningTime;
-	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> ItemMesh;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> Sphere;
 };

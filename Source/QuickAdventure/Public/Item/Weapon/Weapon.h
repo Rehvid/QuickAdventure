@@ -24,6 +24,8 @@ public:
 	FORCEINLINE TArray<FName> GetCombatMontageSections () const { return CombatMontageSections; };
 protected:
 	virtual void BeginPlay() override;
+
+	virtual void OnOverlap(AActor* TargetActor) override;
 	
 	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
