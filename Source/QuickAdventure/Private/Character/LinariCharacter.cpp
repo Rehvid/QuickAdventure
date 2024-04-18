@@ -12,7 +12,11 @@ void ALinariCharacter::SetOverlappingItem(AItemBase* Item)
 
 void ALinariCharacter::Dodge()
 {
-	PlayDodgeMontage();
+	if (CharacterAction == ECharacterActionState::ECAS_Unoccupied)
+	{
+		PlayDodgeMontage();
+		CharacterAction = ECharacterActionState::ECAS_Dodging;
+	}
 }
 
 void ALinariCharacter::EKeyPressed()
@@ -25,10 +29,32 @@ void ALinariCharacter::EKeyPressed()
 
 void ALinariCharacter::PlayAttackSection()
 {
-	if (EquippedWeapon)
+	if (EquippedWeapon && CanAttack())
 	{
 		PlayCombatSection(EquippedWeapon->GetCombatMontage(), EquippedWeapon->GetCombatMontageSections());
+		CharacterAction = ECharacterActionState::ECAS_Attacking;
 	}
+}
+
+bool ALinariCharacter::IsUnoccupied() const
+{
+	return CharacterAction == ECharacterActionState::ECAS_Unoccupied;
+}
+
+bool ALinariCharacter::CanAttack()
+{
+	return CharacterAction == ECharacterActionState::ECAS_Unoccupied
+		&& CharacterState != ECharacterState::ELCS_Unequipped;
+}
+
+void ALinariCharacter::AttackEnd()
+{
+	CharacterAction = ECharacterActionState::ECAS_Unoccupied;
+}
+
+void ALinariCharacter::DodgeEnd()
+{
+	CharacterAction = ECharacterActionState::ECAS_Unoccupied;
 }
 
 void ALinariCharacter::EquipWeapon(AWeapon* Weapon)

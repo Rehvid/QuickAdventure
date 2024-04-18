@@ -19,8 +19,16 @@ struct FInputActionValue;
 UENUM(BlueprintType)
 enum class ECharacterState : uint8
 {
-	ELCS_Unoccupied UMETA(DisplayName = "Unoccupied"),
+	ELCS_Unequipped UMETA(DisplayName = "Unequipped"),
 	ELCS_EquippedWeapon UMETA(DisplayName = "Equipped Weapon")
+};
+
+UENUM(BlueprintType)
+enum class ECharacterActionState: uint8
+{
+	ECAS_Unoccupied UMETA(DisplayName = "Unoccupied"),
+	ECAS_Attacking UMETA(DisplayName = "Attacking"),
+	ECAS_Dodging UMETA(DisplayName = "Dodging")
 };
 
 /**
@@ -37,9 +45,19 @@ public:
 	void Dodge();
 	void EKeyPressed();
 	void PlayAttackSection();
+	bool IsUnoccupied() const;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ECharacterState CharacterState = ECharacterState::ELCS_Unoccupied;
+	ECharacterState CharacterState = ECharacterState::ELCS_Unequipped;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ECharacterActionState CharacterAction = ECharacterActionState::ECAS_Unoccupied;
+
+	virtual bool CanAttack() override;
+	virtual void AttackEnd() override;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void DodgeEnd();
 private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;

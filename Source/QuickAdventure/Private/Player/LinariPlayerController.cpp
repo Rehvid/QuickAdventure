@@ -86,7 +86,7 @@ void ALinariPlayerController::Look(const FInputActionValue& InputActionValue)
 
 void ALinariPlayerController::Jump()
 {
-	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround() && ControlledPawn->IsUnoccupied())
 	{
 		ControlledPawn->Jump();
 	}
