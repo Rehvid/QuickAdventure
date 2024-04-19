@@ -21,6 +21,13 @@ void ALinariCharacter::Dodge()
 
 void ALinariCharacter::EKeyPressed()
 {
+	//TODO: Refactor this code letter
+
+	if (EquippedWeapon)
+	{
+		PlayEquipMontage();
+	}
+	
 	if (AWeapon* Weapon = Cast<AWeapon>(OverlappingItem))
 	{
 		EquipWeapon(Weapon);
@@ -72,6 +79,21 @@ void ALinariCharacter::PlayDodgeMontage()
 		PlayMontageSection(DodgeAnimMontage, DefaultSection);
 	}
 }
+
+void ALinariCharacter::PlayEquipMontage()
+{
+	if (CanEquipWeapon())
+	{
+		PlayMontageSection(EquipMontage, EquippedWeapon->GetEquipMontageSection());
+	}
+}
+
+bool ALinariCharacter::CanEquipWeapon() const
+{
+	return (EquipMontage && EquippedWeapon);
+}
+
+
 
 
 

@@ -19,7 +19,8 @@ class QUICKADVENTURE_API AWeapon : public AItemBase
 public:
 	AWeapon();
 	void Equip(USceneComponent* Parent, FName const SocketName);
-	
+
+	FORCEINLINE FName GetEquipMontageSection() const {return EquipMontageSection;}
 	FORCEINLINE TObjectPtr<UAnimMontage> GetCombatMontage () const { return CombatMontage; };
 	FORCEINLINE TArray<FName> GetCombatMontageSections () const { return CombatMontageSections; };
 protected:
@@ -38,10 +39,13 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<USceneComponent>BoxTraceEnd;
-
+	
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> CombatMontage;
 
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	TArray<FName> CombatMontageSections;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	FName EquipMontageSection = "Default";
 };

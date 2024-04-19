@@ -67,7 +67,12 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> DodgeAnimMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
+	TObjectPtr<UAnimMontage> EquipMontage;
 	
 	void PlayDodgeMontage();
 	void EquipWeapon(AWeapon* Weapon);
+	void PlayEquipMontage();
+	bool CanEquipWeapon() const;
 };
