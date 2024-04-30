@@ -15,6 +15,9 @@ public:
 	ACharacterBase();
 		
 	virtual void PlayCombatSection(UAnimMontage* CombatMontage, const TArray<FName> CombatMontageSections);
+
+
+	FORCEINLINE FName GetRightHandSocketName() const { return RightHandSocketName; } 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName RightHandSocketName;
@@ -25,9 +28,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void PlayMontageSection(UAnimMontage* Montage, const FName& SectionName);
 	virtual bool CanAttack();
-
-	UFUNCTION(BlueprintCallable)
-	virtual void AttackEnd();
 	
 	void PlayRandomMontageSection(UAnimMontage* Montage, const TArray<FName>& Sections);
 };

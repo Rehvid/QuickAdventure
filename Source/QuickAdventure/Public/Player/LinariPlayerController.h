@@ -67,7 +67,7 @@ private:
 	void StartCrouching();
 	void StopCrouching();
 	void Dodge();
-	void EKeyPressed();
+	void InteractionKeyPressed();
 	void Attack();
 	void SetCharacterMovementMaxWalkSpeed(const double Speed) const;
 };

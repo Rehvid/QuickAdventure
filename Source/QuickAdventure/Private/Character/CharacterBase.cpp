@@ -29,10 +29,6 @@ bool ACharacterBase::CanAttack()
 	return false;
 }
 
-void ACharacterBase::AttackEnd()
-{
-}
-
 void ACharacterBase::PlayCombatSection(UAnimMontage* CombatMontage, const TArray<FName> CombatMontageSections)
 {
 	if (CombatMontage)

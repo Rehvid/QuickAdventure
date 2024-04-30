@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Interface/ItemInterface.h"
 #include "Item/ItemBase.h"
 #include "Weapon.generated.h"
 
@@ -12,20 +13,22 @@ class UBoxComponent;
  * 
  */
 UCLASS()
-class QUICKADVENTURE_API AWeapon : public AItemBase
+class QUICKADVENTURE_API AWeapon : public AItemBase, public IItemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AWeapon();
-	void Equip(USceneComponent* Parent, FName const SocketName);
+	virtual void HandleInteractionKey(ALinariCharacter* Character) override;
+	void AttachToSocketComponent(USceneComponent* Parent, FName const SocketName);
 
+	FORCEINLINE FName GetDisarmSocket() const { return DisarmSocketName; }
+	FORCEINLINE FName GetDisarmMontageSection() const {return DisarmMontageSection;}
 	FORCEINLINE FName GetEquipMontageSection() const {return EquipMontageSection;}
 	FORCEINLINE TObjectPtr<UAnimMontage> GetCombatMontage () const { return CombatMontage; };
 	FORCEINLINE TArray<FName> GetCombatMontageSections () const { return CombatMontageSections; };
 protected:
 	virtual void BeginPlay() override;
-
 	virtual void OnOverlap(AActor* TargetActor) override;
 	
 	UFUNCTION()
@@ -48,4 +51,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	FName EquipMontageSection = "Default";
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	FName DisarmMontageSection = "Default";
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	FName DisarmSocketName = "Socket";
 };

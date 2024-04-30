@@ -28,7 +28,9 @@ enum class ECharacterActionState: uint8
 {
 	ECAS_Unoccupied UMETA(DisplayName = "Unoccupied"),
 	ECAS_Attacking UMETA(DisplayName = "Attacking"),
-	ECAS_Dodging UMETA(DisplayName = "Dodging")
+	ECAS_Jumping UMETA(DisplayName = "Jumping"),
+	ECAS_Dodging UMETA(DisplayName = "Dodging"),
+	ECAS_EquippingWeapon UMETA(DisplayName ="Equipping Weapon")
 };
 
 /**
@@ -41,11 +43,20 @@ class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase, public IItemI
 
 public:
 	virtual void SetOverlappingItem(AItemBase* Item) override;
+	UFUNCTION(BlueprintCallable)
+	virtual void SetCharacterActionState(const ECharacterActionState NewCharacterActionState);
+	virtual void SetCharacterState(const ECharacterState NewCharacterState);
+	
+	void InteractionKeyPressed();
+	void EquipWeapon(AWeapon* Weapon);
+	void HandleWeaponInteraction();
+	bool CanPickUpWeapon() const;
 	
 	void Dodge();
-	void EKeyPressed();
 	void PlayAttackSection();
+	bool IsUnequipped() const;
 	bool IsUnoccupied() const;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ECharacterState CharacterState = ECharacterState::ELCS_Unequipped;
@@ -54,10 +65,12 @@ protected:
 	ECharacterActionState CharacterAction = ECharacterActionState::ECAS_Unoccupied;
 
 	virtual bool CanAttack() override;
-	virtual void AttackEnd() override;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void DodgeEnd();
+	virtual void AttachWeaponToHandSocket();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void AttachWeaponToHoldSocket();
 private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;
@@ -70,9 +83,13 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> EquipMontage;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
+	TObjectPtr<UAnimMontage> DisarmMontage;
 	
 	void PlayDodgeMontage();
-	void EquipWeapon(AWeapon* Weapon);
 	void PlayEquipMontage();
+	void PlayDisarmMontage();
 	bool CanEquipWeapon() const;
+	bool CanDisarmWeapon() const;
 };

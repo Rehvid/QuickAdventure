@@ -6,6 +6,7 @@
 #include "UObject/Interface.h"
 #include "ItemInterface.generated.h"
 
+class ALinariCharacter;
 class AItemBase;
 
 UINTERFACE(MinimalAPI)
@@ -18,5 +19,6 @@ class QUICKADVENTURE_API IItemInterface
 {
 	GENERATED_BODY()
 public:
-	virtual void SetOverlappingItem(AItemBase* Item) = 0;
+	virtual void SetOverlappingItem(AItemBase* Item);
+	virtual void HandleInteractionKey(ALinariCharacter* Character);
 };

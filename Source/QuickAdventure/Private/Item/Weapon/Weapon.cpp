@@ -3,6 +3,7 @@
 
 #include "Item/Weapon/Weapon.h"
 
+#include "Character/LinariCharacter.h"
 #include "Components/BoxComponent.h"
 
 AWeapon::AWeapon()
@@ -17,7 +18,20 @@ AWeapon::AWeapon()
 	BoxTraceEnd->SetupAttachment(GetRootComponent());
 }
 
-void AWeapon::Equip(USceneComponent* Parent, FName const SocketName)
+void AWeapon::HandleInteractionKey(ALinariCharacter* Character)
+{
+	if (Character->CanPickUpWeapon())
+	{
+		AttachToSocketComponent(Character->GetMesh(), Character->GetRightHandSocketName());
+		Character->EquipWeapon(this);
+	}
+	else
+	{
+		Character->HandleWeaponInteraction();
+	}
+}
+
+void AWeapon::AttachToSocketComponent(USceneComponent* Parent, FName const SocketName)
 {
 	FAttachmentTransformRules const TransformRules(EAttachmentRule::SnapToTarget, true);
 	AttachToComponent(Parent, TransformRules, SocketName);

@@ -13,6 +13,7 @@ void ALinariPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ControlledPawn = GetPawn<ALinariCharacter>();
+
 	
 	checkf(ControlledPawn, TEXT("Linari Character class is not initialzied"));
 	checkf(LinariContext, TEXT("Linari Context is not initialzied, please fill out BP_LinariPlayerController"));
@@ -43,13 +44,15 @@ void ALinariPlayerController::SetupInputComponent()
 	
 	EnhancedInputComponent->BindAction(DodgeAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Dodge);
 	
-	EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::EKeyPressed);
+	EnhancedInputComponent->BindAction(EKeyPressedAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::InteractionKeyPressed);
 
 	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ALinariPlayerController::Attack);
 }
 
 void ALinariPlayerController::Move(const FInputActionValue& InputActionValue)
 {
+	if (!ControlledPawn->IsUnoccupied()) return;
+	
 	const FVector2d InputAxisVector = InputActionValue.Get<FVector2d>();
 	const FRotator Rotation = GetControlRotation();
 	const FRotator YawRotation(0.f, Rotation.Yaw, 0.f);
@@ -86,7 +89,7 @@ void ALinariPlayerController::Look(const FInputActionValue& InputActionValue)
 
 void ALinariPlayerController::Jump()
 {
-	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround() && ControlledPawn->IsUnoccupied())
+	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
 	{
 		ControlledPawn->Jump();
 	}
@@ -117,11 +120,11 @@ void ALinariPlayerController::Dodge()
 	}
 }
 
-void ALinariPlayerController::EKeyPressed()
+void ALinariPlayerController::InteractionKeyPressed()
 {
 	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround() && !ControlledPawn->GetMovementComponent()->IsCrouching())
 	{
-		ControlledPawn->EKeyPressed();
+		ControlledPawn->InteractionKeyPressed();
 	}
 }
 
