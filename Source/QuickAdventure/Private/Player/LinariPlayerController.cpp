@@ -13,14 +13,13 @@ void ALinariPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	ControlledPawn = GetPawn<ALinariCharacter>();
-
 	
 	checkf(ControlledPawn, TEXT("Linari Character class is not initialzied"));
-	checkf(LinariContext, TEXT("Linari Context is not initialzied, please fill out BP_LinariPlayerController"));
+	checkf(PlayerContext, TEXT("Linari Context is not initialzied, please fill out BP_LinariPlayerController"));
 	
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
-		Subsystem->AddMappingContext(LinariContext, 0);
+		Subsystem->AddMappingContext(PlayerContext, 0);
 	}
 }
 

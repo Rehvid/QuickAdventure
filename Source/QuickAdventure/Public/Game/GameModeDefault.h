@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "LinariGameModeBase.generated.h"
+#include "GameModeDefault.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class QUICKADVENTURE_API ALinariGameModeBase : public AGameModeBase
+class QUICKADVENTURE_API AGameModeDefault : public AGameModeBase
 {
 	GENERATED_BODY()
 	

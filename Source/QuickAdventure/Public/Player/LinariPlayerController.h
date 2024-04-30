@@ -27,7 +27,7 @@ private:
 	TObjectPtr<ALinariCharacter> ControlledPawn;
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TObjectPtr<UInputMappingContext> LinariContext;
+	TObjectPtr<UInputMappingContext> PlayerContext;
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
