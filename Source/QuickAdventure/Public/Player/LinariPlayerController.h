@@ -58,7 +58,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Movement Properties")
 	double RunningSpeed = 600.f;
+	
+	FTimerHandle JumpTimer;
 
+	UPROPERTY(EditAnywhere, Category = "Movement Properties")
+	double WaitTimeUntilJumpAgain = 1.f;
+	
 	void Move(const FInputActionValue& InputActionValue);
 	void StartRunning();
 	void StopRunning(); 
@@ -70,4 +75,6 @@ private:
 	void InteractionKeyPressed();
 	void Attack();
 	void SetCharacterMovementMaxWalkSpeed(const double Speed) const;
+
+	void JumpTimerFinished();
 };

@@ -88,9 +88,13 @@ void ALinariPlayerController::Look(const FInputActionValue& InputActionValue)
 
 void ALinariPlayerController::Jump()
 {
-	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
+	if (ControlledPawn->CanJump())
 	{
-		ControlledPawn->Jump();
+		ControlledPawn->SetCharacterActionState(ECharacterActionState::ECAS_Jumping);
+        ControlledPawn->Jump();
+		ControlledPawn->SetCanJumpAgain(false);
+		
+		GetWorldTimerManager().SetTimer(JumpTimer, this, &ALinariPlayerController::JumpTimerFinished , WaitTimeUntilJumpAgain);
 	}
 }
 
@@ -99,6 +103,7 @@ void ALinariPlayerController::StartCrouching()
 {
 	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
 	{
+		ControlledPawn->SetCharacterActionState(ECharacterActionState::ECAS_Crouching);
 		ControlledPawn->Crouch();
 	}
 }
@@ -107,6 +112,7 @@ void ALinariPlayerController::StopCrouching()
 {
 	if (ControlledPawn->GetMovementComponent()->IsCrouching())
 	{
+		ControlledPawn->SetCharacterActionState(ECharacterActionState::ECAS_Crouching);
         ControlledPawn->UnCrouch();
 	}
 }
@@ -138,4 +144,10 @@ void ALinariPlayerController::SetCharacterMovementMaxWalkSpeed(const double Spee
 	{
 		ControlledPawn->GetCharacterMovement()->MaxWalkSpeed = Speed;
 	}
+}
+
+void ALinariPlayerController::JumpTimerFinished()
+{
+	GetWorldTimerManager().ClearTimer(JumpTimer);
+	ControlledPawn->SetCanJumpAgain(true);
 }

@@ -30,6 +30,7 @@ enum class ECharacterActionState: uint8
 	ECAS_Attacking UMETA(DisplayName = "Attacking"),
 	ECAS_Jumping UMETA(DisplayName = "Jumping"),
 	ECAS_Dodging UMETA(DisplayName = "Dodging"),
+	ECAS_Crouching UMETA(DisplayName = "Crouching"),
 	ECAS_EquippingWeapon UMETA(DisplayName ="Equipping Weapon")
 };
 
@@ -46,6 +47,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void SetCharacterActionState(const ECharacterActionState NewCharacterActionState);
 	virtual void SetCharacterState(const ECharacterState NewCharacterState);
+
+	FORCEINLINE void SetCanJumpAgain(const bool CanJumpAgain) { bCanJumpAgain = CanJumpAgain;}
+	FORCEINLINE bool CanJumpAgain() const { return bCanJumpAgain; }
 	
 	void InteractionKeyPressed();
 	void EquipWeapon(AWeapon* Weapon);
@@ -56,7 +60,7 @@ public:
 	void PlayAttackSection();
 	bool IsUnequipped() const;
 	bool IsUnoccupied() const;
-
+	bool CanJump() const;
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ECharacterState CharacterState = ECharacterState::ELCS_Unequipped;
@@ -86,6 +90,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> DisarmMontage;
+
+	UPROPERTY(VisibleAnywhere, Category = "Movement Properties")
+	bool bCanJumpAgain = true;
 	
 	void PlayDodgeMontage();
 	void PlayEquipMontage();

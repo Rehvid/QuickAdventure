@@ -2,6 +2,7 @@
 
 #include "Character/LinariCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Item/ItemBase.h"
 #include "Item/Weapon/Weapon.h"
 
@@ -86,6 +87,12 @@ bool ALinariCharacter::IsUnoccupied() const
 	return CharacterAction == ECharacterActionState::ECAS_Unoccupied;
 }
 
+bool ALinariCharacter::CanJump() const
+{
+	return !GetCharacterMovement()->IsCrouching()
+		&& IsUnoccupied()
+		&& bCanJumpAgain;
+}
 
 bool ALinariCharacter::CanAttack()
 {
