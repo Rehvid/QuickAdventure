@@ -63,8 +63,8 @@ void ALinariCharacter::Dodge()
 {
 	if (CharacterAction == ECharacterActionState::ECAS_Unoccupied)
 	{
-		PlayDodgeMontage();
 		SetCharacterActionState(ECharacterActionState::ECAS_Dodging);
+		PlayDodgeMontage();
 	}
 }
 
@@ -116,6 +116,11 @@ void ALinariCharacter::AttachWeaponToHoldSocket()
 		EquippedWeapon->AttachToSocketComponent(GetMesh(), EquippedWeapon->GetDisarmSocket());
 		SetCharacterActionState(ECharacterActionState::ECAS_Unoccupied);
 	}
+}
+
+void ALinariCharacter::SetCharacterMovementMaxSpeedWalk(const double Speed)
+{
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
 }
 
 void ALinariCharacter::PlayDodgeMontage()

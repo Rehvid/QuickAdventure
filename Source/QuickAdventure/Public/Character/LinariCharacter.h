@@ -61,6 +61,9 @@ public:
 	bool IsUnequipped() const;
 	bool IsUnoccupied() const;
 	bool CanJump() const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetCharacterMovementMaxSpeedWalk(const double Speed);
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ECharacterState CharacterState = ECharacterState::ELCS_Unequipped;
@@ -75,6 +78,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void AttachWeaponToHoldSocket();
+
 private:
 	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
 	TObjectPtr<AItemBase> OverlappingItem;

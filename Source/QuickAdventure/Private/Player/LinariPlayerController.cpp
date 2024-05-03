@@ -67,16 +67,13 @@ void ALinariPlayerController::StartRunning()
 {
 	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
 	{
-        SetCharacterMovementMaxWalkSpeed(RunningSpeed);
+        ControlledPawn->SetCharacterMovementMaxSpeedWalk(RunningSpeed);
 	}
 }
 
 void ALinariPlayerController::StopRunning()
 {
-	if (ControlledPawn->GetMovementComponent()->IsMovingOnGround())
-	{
-		SetCharacterMovementMaxWalkSpeed(WalkingSpeed);
-	}
+	ControlledPawn->SetCharacterMovementMaxSpeedWalk(WalkingSpeed);
 }
 
 void ALinariPlayerController::Look(const FInputActionValue& InputActionValue)
