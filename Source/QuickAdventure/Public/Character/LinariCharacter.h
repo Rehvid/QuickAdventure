@@ -4,9 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "CharacterBase.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Interface/ItemInterface.h"
 #include "LinariCharacter.generated.h"
 
+class UPlayerAnimationsDataConfig;
+class UPlayerInputDataConfig;
 class AWeapon;
 class AItemBase;
 class UInputComponent;
@@ -43,64 +46,79 @@ class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase, public IItemI
 	GENERATED_BODY()
 
 public:
-	virtual void SetOverlappingItem(AItemBase* Item) override;
+	FORCEINLINE virtual void SetOverlappingItem(AItemBase* Item) override { OverlappingItem = Item; }
 	UFUNCTION(BlueprintCallable)
-	virtual void SetCharacterActionState(const ECharacterActionState NewCharacterActionState);
-	virtual void SetCharacterState(const ECharacterState NewCharacterState);
-
-	FORCEINLINE void SetCanJumpAgain(const bool CanJumpAgain) { bCanJumpAgain = CanJumpAgain;}
-	FORCEINLINE bool CanJumpAgain() const { return bCanJumpAgain; }
+	FORCEINLINE void SetCharacterActionState(const ECharacterActionState NewCharacterActionState) { CharacterActionState = NewCharacterActionState; }
+	FORCEINLINE void SetCharacterState(const ECharacterState NewCharacterState) { CharacterState = NewCharacterState; }
+	FORCEINLINE void SetCharacterMovementMaxSpeedWalk(const double Speed) const { GetCharacterMovement()->MaxWalkSpeed = Speed;}
 	
-	void InteractionKeyPressed();
 	void EquipWeapon(AWeapon* Weapon);
 	void HandleWeaponInteraction();
 	bool CanPickUpWeapon() const;
-	
-	void Dodge();
-	void PlayAttackSection();
-	bool IsUnequipped() const;
-	bool IsUnoccupied() const;
-	bool CanJump() const;
-
-	UFUNCTION(BlueprintCallable)
-	virtual void SetCharacterMovementMaxSpeedWalk(const double Speed);
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "States")
 	ECharacterState CharacterState = ECharacterState::ELCS_Unequipped;
+          
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "States")
+	ECharacterActionState CharacterActionState = ECharacterActionState::ECAS_Unoccupied;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ECharacterActionState CharacterAction = ECharacterActionState::ECAS_Unoccupied;
-
+	virtual void BeginPlay() override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual bool CanAttack() override;
-
+	
 	UFUNCTION(BlueprintCallable)
 	virtual void AttachWeaponToHandSocket();
-
 	UFUNCTION(BlueprintCallable)
 	virtual void AttachWeaponToHoldSocket();
-
 private:
-	UPROPERTY(VisibleInstanceOnly, Category = "Actions")
+	UPROPERTY(VisibleAnywhere, Category = "Items")
 	TObjectPtr<AItemBase> OverlappingItem;
 
-	UPROPERTY(VisibleAnywhere, Category = "Weapon")
+	UPROPERTY(VisibleAnywhere, Category = "Items")
 	TObjectPtr<AWeapon> EquippedWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	TObjectPtr<UInputMappingContext> PlayerContext;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
-	TObjectPtr<UAnimMontage> DodgeAnimMontage;
+	UPROPERTY(EditDefaultsOnly, Category = "EnhancedInput")
+	UPlayerInputDataConfig* PlayerInputActions;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
-	TObjectPtr<UAnimMontage> EquipMontage;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Animation Montages")
-	TObjectPtr<UAnimMontage> DisarmMontage;
-
+	UPROPERTY(EditDefaultsOnly, Category = "Animations")
+	UPlayerAnimationsDataConfig* PlayerAnimations;
+	
 	UPROPERTY(VisibleAnywhere, Category = "Movement Properties")
-	bool bCanJumpAgain = true;
+	bool bIsJumpAvailable = true;
+
+	UPROPERTY(EditAnywhere, Category = "Movement Properties")
+	double WaitTimeUntilJumpAgain = 1.f;
+
+	FTimerHandle CountdownTimerToJumpAgain;
+
+	UPROPERTY(EditAnywhere, Category = "Movement Properties")
+	double WalkSpeed = 300.f;
+
+	UPROPERTY(EditAnywhere, Category = "Movement Properties")
+	double RunSpeed = 600.f;
 	
+	void Move(const FInputActionValue& InputActionValue);
+	void StartRunning();
+	void StopRunning();
+	void Look(const FInputActionValue& InputActionValue);
+	virtual void Jump() override;
+	void StartCountdownTimerToJumpAgain();
+	void ClearCountdownTimerToJumpAgain();
+	void StartCrouching();
+	void StopCrouching();
+	void Dodge();
+	void HandleInteractionKeyPressed();
 	void PlayDodgeMontage();
-	void PlayEquipMontage();
-	void PlayDisarmMontage();
+	void Attack();
+	void PlayAttackSection();
 	bool CanEquipWeapon() const;
+	void PlayEquipMontage();
 	bool CanDisarmWeapon() const;
+	void PlayDisarmMontage();
+	bool IsUnequipped() const;
+	bool IsUnoccupied() const;
+	bool IsJumpAvailable() const;
 };
