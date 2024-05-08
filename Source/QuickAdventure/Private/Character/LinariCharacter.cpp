@@ -257,7 +257,6 @@ void ALinariCharacter::AttachWeaponToHandSocket()
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->AttachToSocketComponent(GetMesh(), RightHandSocketName);
-		SetCharacterActionState(ECharacterActionState::ECAS_Unoccupied);
 	}
 }
 
@@ -266,6 +265,5 @@ void ALinariCharacter::AttachWeaponToHoldSocket()
 	if (EquippedWeapon)
 	{
 		EquippedWeapon->AttachToSocketComponent(GetMesh(), EquippedWeapon->GetDisarmSocket());
-		SetCharacterActionState(ECharacterActionState::ECAS_Unoccupied);
 	}
 }
