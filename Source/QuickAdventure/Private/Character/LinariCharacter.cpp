@@ -198,6 +198,18 @@ void ALinariCharacter::PlayAttackSection()
 	{
 		PlayCombatSection(EquippedWeapon->GetCombatMontage(), EquippedWeapon->GetCombatMontageSections());
 		SetCharacterActionState(ECharacterActionState::ECAS_Attacking);
+	} else if (!EquippedWeapon)
+	{
+		PlayFistAttackSection();
+	}
+	
+}
+
+void ALinariCharacter::PlayFistAttackSection()
+{
+	if (PlayerAnimations->FistAttackMontage)
+	{
+		PlayCombatSection(PlayerAnimations->FistAttackMontage, FistCombatMontageSections);
 	}
 }
 
