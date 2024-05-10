@@ -185,7 +185,10 @@ void ALinariCharacter::HandleInteractionKeyPressed()
 
 void ALinariCharacter::Attack()
 {
-	PlayAttackSection();
+	if (IsUnoccupied())
+	{
+		PlayAttackSection();
+	}
 }
 
 
@@ -200,7 +203,7 @@ void ALinariCharacter::PlayAttackSection()
 
 bool ALinariCharacter::CanAttack()
 {
-	return IsUnoccupied() && IsUnequipped();
+	return IsUnoccupied();
 }
 
 bool ALinariCharacter::CanEquipWeapon() const
