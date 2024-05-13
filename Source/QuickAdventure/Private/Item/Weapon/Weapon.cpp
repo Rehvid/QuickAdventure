@@ -1,10 +1,9 @@
 // Copyright Dawid Harendarz.
 
-
 #include "Item/Weapon/Weapon.h"
-
 #include "Character/LinariCharacter.h"
 #include "Components/BoxComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AWeapon::AWeapon()
 {
@@ -44,15 +43,40 @@ void AWeapon::BeginPlay()
 	WeaponBox->OnComponentBeginOverlap.AddDynamic(this, &AWeapon::OnBoxOverlap);
 }
 
-void AWeapon::OnOverlap(AActor* TargetActor)
-{
-	Super::OnOverlap(TargetActor);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Start Overlapping"));
-}
-
 void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Start BoxOverlapping"));
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+	ActorsToIgnore.Add(GetOwner());
+
+	if (ICombatInterface *CombatInterface = Cast<ICombatInterface>(OtherActor))
+	{
+		CombatInterface->GetHit();
+	}
+
+	
+	FHitResult BoxHit = SweepResult;
+	const FVector Start = BoxTraceStart->GetComponentLocation();
+	const FVector End = BoxTraceEnd->GetComponentLocation();
+	
+	UKismetSystemLibrary::BoxTraceSingle(
+		this,
+		Start,
+		End,
+		FVector(1.f),
+		BoxTraceStart->GetComponentRotation(),
+		TraceTypeQuery1,
+		false,
+		ActorsToIgnore,
+		EDrawDebugTrace::ForDuration,
+		BoxHit,
+		true
+	);
+
+	CreateFields(BoxHit.ImpactPoint);
+	//TODO: ApplyDamage by GameplayEffects
 }
+
+
+

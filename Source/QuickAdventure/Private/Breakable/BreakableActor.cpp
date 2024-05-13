@@ -27,3 +27,11 @@ void ABreakableActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ABreakableActor::GetHit()
+{
+
+	//TODO: Jak zostanie przekroczony Threshold uderzenia, to następuję chwilowe rozsypanie kawałków, nastepnie po czasie element zostaje zniszczony.
+	// Destroy();
+	// SetLifeSpan(1.5f);
+}
+

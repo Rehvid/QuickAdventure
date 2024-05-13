@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/CombatInterface.h"
 #include "BreakableActor.generated.h"
 
 class ATreasure;
@@ -11,13 +12,14 @@ class UCapsuleComponent;
 class UGeometryCollectionComponent;
 
 UCLASS()
-class QUICKADVENTURE_API ABreakableActor : public AActor
+class QUICKADVENTURE_API ABreakableActor : public AActor, public ICombatInterface
 {
 	GENERATED_BODY()
 	
 public:	
 	ABreakableActor();
 	virtual void Tick(float DeltaTime) override;
+	virtual void GetHit() override;
 protected:
 	virtual void BeginPlay() override;
 	

@@ -15,6 +15,7 @@ void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 	EquippedWeapon = Weapon;
 	SetCharacterState(ECharacterState::ELCS_EquippedWeapon);
 	SetOverlappingItem(nullptr);
+	Weapon->SetOwner(this);
 }
 
 void ALinariCharacter::HandleWeaponInteraction()
@@ -42,7 +43,7 @@ void ALinariCharacter::BeginPlay()
 	checkf(PlayerContext, TEXT("Linari Context is not initialzied, please fill out BP_LinariCharacter"));
 	checkf(PlayerInputActions, TEXT("Input actions are not initalized, please fill out DA_PlayerInputDataConfig"));
 
-	const APlayerController* PlayerController = CastChecked<APlayerController>(GetController());
+	const APlayerController* PlayerController = Cast<APlayerController>(GetController());
 	if (!PlayerController) return;
 	
 	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -201,8 +202,10 @@ void ALinariCharacter::PlayAttackSection()
 	} else if (!EquippedWeapon)
 	{
 		PlayFistAttackSection();
+
+		//ApplyDamage tylko przy ataku reką
+
 	}
-	
 }
 
 void ALinariCharacter::PlayFistAttackSection()

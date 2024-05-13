@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Interface/CombatInterface.h"
 #include "Interface/ItemInterface.h"
 #include "Item/ItemBase.h"
 #include "Weapon.generated.h"
@@ -13,7 +14,7 @@ class UBoxComponent;
  * 
  */
 UCLASS()
-class QUICKADVENTURE_API AWeapon : public AItemBase, public IItemInterface
+class QUICKADVENTURE_API AWeapon : public AItemBase, public IItemInterface, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -29,10 +30,12 @@ public:
 	FORCEINLINE TArray<FName> GetCombatMontageSections () const { return CombatMontageSections; };
 protected:
 	virtual void BeginPlay() override;
-	virtual void OnOverlap(AActor* TargetActor) override;
 	
 	UFUNCTION()
 	void OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CreateFields(const FVector& FieldLocation);
 private:
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<UBoxComponent> WeaponBox;
