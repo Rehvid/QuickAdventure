@@ -46,17 +46,24 @@ void AWeapon::BeginPlay()
 void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	FHitResult BoxHit = SweepResult;
+	BoxTraceSingle(BoxHit);
+	
+	if (!BoxHit.GetActor()) return;
+	if (ICombatInterface * CombatInterface = Cast<ICombatInterface>(OtherActor))
+	{
+		CombatInterface->GetHit();
+		CreateFields(BoxHit.ImpactPoint);
+	}
+	//TODO: ApplyDamage by GameplayEffects
+}
+
+void AWeapon::BoxTraceSingle(FHitResult& BoxHit)
+{
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
 	ActorsToIgnore.Add(GetOwner());
-
-	if (ICombatInterface *CombatInterface = Cast<ICombatInterface>(OtherActor))
-	{
-		CombatInterface->GetHit();
-	}
-
 	
-	FHitResult BoxHit = SweepResult;
 	const FVector Start = BoxTraceStart->GetComponentLocation();
 	const FVector End = BoxTraceEnd->GetComponentLocation();
 	
@@ -64,19 +71,15 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 		this,
 		Start,
 		End,
-		FVector(1.f),
+		BoxTraceSingleDistanceFromCenter,
 		BoxTraceStart->GetComponentRotation(),
 		TraceTypeQuery1,
 		false,
 		ActorsToIgnore,
-		EDrawDebugTrace::ForDuration,
+		bUseDebug ? EDrawDebugTrace::ForDuration : EDrawDebugTrace::None,
 		BoxHit,
 		true
 	);
-
-	CreateFields(BoxHit.ImpactPoint);
-	//TODO: ApplyDamage by GameplayEffects
 }
-
 
 

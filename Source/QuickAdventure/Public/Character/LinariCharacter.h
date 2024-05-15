@@ -51,6 +51,12 @@ public:
 	FORCEINLINE void SetCharacterActionState(const ECharacterActionState NewCharacterActionState) { CharacterActionState = NewCharacterActionState; }
 	FORCEINLINE void SetCharacterState(const ECharacterState NewCharacterState) { CharacterState = NewCharacterState; }
 	FORCEINLINE void SetCharacterMovementMaxSpeedWalk(const double Speed) const { GetCharacterMovement()->MaxWalkSpeed = Speed;}
+
+	UFUNCTION(BlueprintCallable)
+	void EnableCollisionForEquippedWeapon();
+
+	UFUNCTION(BlueprintCallable)
+	void DisableCollisionForEquippedWeapon();
 	
 	void EquipWeapon(AWeapon* Weapon);
 	void HandleWeaponInteraction();
@@ -100,9 +106,6 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Movement Properties")
 	double RunSpeed = 600.f;
 	
-	UPROPERTY(EditAnywhere, Category = "Fist Combat")
-	TArray<FName> FistCombatMontageSections;
-	
 	void Move(const FInputActionValue& InputActionValue);
 	void StartRunning();
 	void StopRunning();
@@ -117,7 +120,6 @@ private:
 	void PlayDodgeMontage();
 	void Attack();
 	void PlayAttackSection();
-	void PlayFistAttackSection();
 	bool CanEquipWeapon() const;
 	void PlayEquipMontage();
 	bool CanDisarmWeapon() const;

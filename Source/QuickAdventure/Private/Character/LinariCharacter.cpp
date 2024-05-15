@@ -4,11 +4,29 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Components/BoxComponent.h"
 #include "DataAsset/PlayerAnimationsDataConfig.h"
 #include "DataAsset/PlayerInputDataConfig.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Item/ItemBase.h"
 #include "Item/Weapon/Weapon.h"
+
+
+void ALinariCharacter::EnableCollisionForEquippedWeapon()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->WeaponBox->SetCollisionResponseToAllChannels(ECR_Overlap);
+	}
+}
+
+void ALinariCharacter::DisableCollisionForEquippedWeapon()
+{
+	if (EquippedWeapon)
+	{
+		EquippedWeapon->WeaponBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+	}
+}
 
 void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 {
@@ -192,27 +210,12 @@ void ALinariCharacter::Attack()
 	}
 }
 
-
 void ALinariCharacter::PlayAttackSection()
 {
 	if (EquippedWeapon && CanAttack())
 	{
 		PlayCombatSection(EquippedWeapon->GetCombatMontage(), EquippedWeapon->GetCombatMontageSections());
 		SetCharacterActionState(ECharacterActionState::ECAS_Attacking);
-	} else if (!EquippedWeapon)
-	{
-		PlayFistAttackSection();
-
-		//ApplyDamage tylko przy ataku reką
-
-	}
-}
-
-void ALinariCharacter::PlayFistAttackSection()
-{
-	if (PlayerAnimations->FistAttackMontage)
-	{
-		PlayCombatSection(PlayerAnimations->FistAttackMontage, FistCombatMontageSections);
 	}
 }
 

@@ -19,10 +19,13 @@ class QUICKADVENTURE_API AWeapon : public AItemBase, public IItemInterface, publ
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	TObjectPtr<UBoxComponent> WeaponBox;
+	
 	AWeapon();
 	virtual void HandleInteractionKey(ALinariCharacter* Character) override;
 	void AttachToSocketComponent(USceneComponent* Parent, FName const SocketName);
-
+	
 	FORCEINLINE FName GetDisarmSocket() const { return DisarmSocketName; }
 	FORCEINLINE FName GetDisarmMontageSection() const {return DisarmMontageSection;}
 	FORCEINLINE FName GetEquipMontageSection() const {return EquipMontageSection;}
@@ -37,14 +40,18 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void CreateFields(const FVector& FieldLocation);
 private:
-	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
-	TObjectPtr<UBoxComponent> WeaponBox;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<USceneComponent>BoxTraceStart;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<USceneComponent>BoxTraceEnd;
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	bool bUseDebug = false;
+
+	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
+	FVector BoxTraceSingleDistanceFromCenter = FVector(5.f);
 	
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	TObjectPtr<UAnimMontage> CombatMontage;
@@ -60,4 +67,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	FName DisarmSocketName = "Socket";
+
+	void BoxTraceSingle(FHitResult& BoxHit);
 };

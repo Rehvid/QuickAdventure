@@ -19,7 +19,6 @@ ABreakableActor::ABreakableActor()
 void ABreakableActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ABreakableActor::Tick(float DeltaTime)
@@ -29,9 +28,7 @@ void ABreakableActor::Tick(float DeltaTime)
 
 void ABreakableActor::GetHit()
 {
-
-	//TODO: Jak zostanie przekroczony Threshold uderzenia, to następuję chwilowe rozsypanie kawałków, nastepnie po czasie element zostaje zniszczony.
-	// Destroy();
-	// SetLifeSpan(1.5f);
+	Capsule->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+	SetLifeSpan(LifeSpanTime);
 }
 

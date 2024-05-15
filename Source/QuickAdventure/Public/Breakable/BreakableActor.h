@@ -32,4 +32,7 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category = "Breakable Properties")
 	TArray<TSubclassOf<ATreasure>> TreasureClasses;
+
+	UPROPERTY(EditAnywhere, Category = "Breakable Properties")
+	float LifeSpanTime = 1.5f;
 };
