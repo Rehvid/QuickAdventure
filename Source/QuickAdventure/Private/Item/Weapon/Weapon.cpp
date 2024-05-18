@@ -50,7 +50,7 @@ void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	BoxTraceSingle(BoxHit);
 	
 	if (!BoxHit.GetActor()) return;
-	if (ICombatInterface * CombatInterface = Cast<ICombatInterface>(OtherActor))
+	if (ICombatInterface * CombatInterface = Cast<ICombatInterface>(BoxHit.GetActor()))
 	{
 		CombatInterface->GetHit();
 		CreateFields(BoxHit.ImpactPoint);
