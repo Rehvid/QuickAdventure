@@ -15,5 +15,5 @@ class QUICKADVENTURE_API AEnemyCharacter : public ACharacterBase
 	GENERATED_BODY()
 
 public:
-	virtual void GetHit() override;
+	virtual void GetHit(const FVector& ImpactPoint) override;
 };
