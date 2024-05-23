@@ -19,12 +19,19 @@ class QUICKADVENTURE_API AWeapon : public AItemBase, public IItemInterface, publ
 	GENERATED_BODY()
 
 public:
+	//TODO: Move it to the BP
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<UBoxComponent> WeaponBox;
+
+	UPROPERTY()
+	TArray<AActor*> IgnoreActors;
 	
 	AWeapon();
 	virtual void HandleInteractionKey(ALinariCharacter* Character) override;
 	void AttachToSocketComponent(USceneComponent* Parent, FName const SocketName);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void DisableShapeCollisionForOverlap();
 	
 	FORCEINLINE FName GetDisarmSocket() const { return DisarmSocketName; }
 	FORCEINLINE FName GetDisarmMontageSection() const {return DisarmMontageSection;}
@@ -41,15 +48,19 @@ protected:
 	void CreateFields(const FVector& FieldLocation);
 private:
 
+
+	//TODO: Move it to the BP
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<USceneComponent>BoxTraceStart;
 
+	//TODO: Move it to the BP
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	TObjectPtr<USceneComponent>BoxTraceEnd;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	bool bUseDebug = false;
 
+	//TODO: Move it to the BP
 	UPROPERTY(EditAnywhere, Category = "Weapon Properties")
 	FVector BoxTraceSingleDistanceFromCenter = FVector(5.f);
 	

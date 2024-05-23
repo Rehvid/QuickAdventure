@@ -21,6 +21,7 @@ void AWeapon::HandleInteractionKey(ALinariCharacter* Character)
 {
 	if (Character->CanPickUpWeapon())
 	{
+		DisableShapeCollisionForOverlap();
 		AttachToSocketComponent(Character->GetMesh(), Character->GetRightHandSocketName());
 		Character->EquipWeapon(this);
 	}
@@ -46,13 +47,14 @@ void AWeapon::BeginPlay()
 void AWeapon::OnBoxOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
                            int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	FHitResult BoxHit = SweepResult;
+	FHitResult BoxHit;
 	BoxTraceSingle(BoxHit);
 	
 	if (!BoxHit.GetActor()) return;
-	if (ICombatInterface * CombatInterface = Cast<ICombatInterface>(BoxHit.GetActor()))
+	
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(BoxHit.GetActor()))
 	{
-		CombatInterface->GetHit();
+		CombatInterface->GetHit(BoxHit.ImpactPoint);
 		CreateFields(BoxHit.ImpactPoint);
 	}
 	//TODO: ApplyDamage by GameplayEffects
@@ -63,6 +65,11 @@ void AWeapon::BoxTraceSingle(FHitResult& BoxHit)
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(this);
 	ActorsToIgnore.Add(GetOwner());
+
+	for (AActor* Actor : IgnoreActors)
+	{
+		ActorsToIgnore.AddUnique(Actor);
+	}
 	
 	const FVector Start = BoxTraceStart->GetComponentLocation();
 	const FVector End = BoxTraceEnd->GetComponentLocation();
@@ -80,6 +87,7 @@ void AWeapon::BoxTraceSingle(FHitResult& BoxHit)
 		BoxHit,
 		true
 	);
+	IgnoreActors.AddUnique(BoxHit.GetActor());
 }
 
 
