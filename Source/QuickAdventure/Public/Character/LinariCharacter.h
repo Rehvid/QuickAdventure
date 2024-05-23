@@ -46,7 +46,7 @@ class QUICKADVENTURE_API ALinariCharacter : public ACharacterBase, public IItemI
 	GENERATED_BODY()
 
 public:
-	FORCEINLINE virtual void SetOverlappingItem(AItemBase* Item) override { OverlappingItem = Item; }
+	virtual void SetOverlappingItem(AItemBase* Item) override { OverlappingItem = Item; }
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE void SetCharacterActionState(const ECharacterActionState NewCharacterActionState) { CharacterActionState = NewCharacterActionState; }
 	FORCEINLINE void SetCharacterState(const ECharacterState NewCharacterState) { CharacterState = NewCharacterState; }

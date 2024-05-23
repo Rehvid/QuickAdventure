@@ -16,7 +16,7 @@ void ALinariCharacter::EnableCollisionForEquippedWeapon()
 {
 	if (EquippedWeapon)
 	{
-		EquippedWeapon->WeaponBox->SetCollisionResponseToAllChannels(ECR_Overlap);
+		EquippedWeapon->WeaponBox->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	}
 }
 
@@ -24,7 +24,8 @@ void ALinariCharacter::DisableCollisionForEquippedWeapon()
 {
 	if (EquippedWeapon)
 	{
-		EquippedWeapon->WeaponBox->SetCollisionResponseToAllChannels(ECR_Ignore);
+		EquippedWeapon->WeaponBox->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		EquippedWeapon->IgnoreActors.Empty();
 	}
 }
 
@@ -34,6 +35,7 @@ void ALinariCharacter::EquipWeapon(AWeapon* Weapon)
 	SetCharacterState(ECharacterState::ELCS_EquippedWeapon);
 	SetOverlappingItem(nullptr);
 	Weapon->SetOwner(this);
+	
 }
 
 void ALinariCharacter::HandleWeaponInteraction()
