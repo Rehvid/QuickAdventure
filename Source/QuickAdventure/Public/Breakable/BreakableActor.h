@@ -19,7 +19,7 @@ class QUICKADVENTURE_API ABreakableActor : public AActor, public ICombatInterfac
 public:	
 	ABreakableActor();
 	virtual void Tick(float DeltaTime) override;
-	virtual void GetHit() override;
+	virtual void GetHit(const FVector& ImpactPoint) override;
 protected:
 	virtual void BeginPlay() override;
 	

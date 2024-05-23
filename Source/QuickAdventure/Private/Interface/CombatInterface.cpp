@@ -3,6 +3,6 @@
 
 #include "Interface/CombatInterface.h"
 
-void ICombatInterface::GetHit()
+void ICombatInterface::GetHit(const FVector& ImpactPoint)
 {
 }

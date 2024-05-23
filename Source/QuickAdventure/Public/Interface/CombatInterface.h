@@ -21,5 +21,5 @@ class QUICKADVENTURE_API ICombatInterface
 public:
 	
 	UFUNCTION()
-	virtual void GetHit();
+	virtual void GetHit(const FVector& ImpactPoint);
 };

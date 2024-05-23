@@ -26,7 +26,7 @@ void ABreakableActor::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ABreakableActor::GetHit()
+void ABreakableActor::GetHit(const FVector& ImpactPoint)
 {
 	Capsule->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
 	SetLifeSpan(LifeSpanTime);
