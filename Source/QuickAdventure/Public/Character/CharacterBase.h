@@ -24,10 +24,15 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Animation Montages")
 	FName DefaultSection;
+
+	UPROPERTY(EditAnywhere, Category = "Animation Montages")
+	TObjectPtr<UAnimMontage> HitReactionMontage;
 	
 	virtual void BeginPlay() override;
 	virtual void PlayMontageSection(UAnimMontage* Montage, const FName& SectionName);
 	virtual bool CanAttack();
 	
 	void PlayRandomMontageSection(UAnimMontage* Montage, const TArray<FName>& Sections);
+
+	void HitReaction(const FVector& ImpactPoint);
 };
