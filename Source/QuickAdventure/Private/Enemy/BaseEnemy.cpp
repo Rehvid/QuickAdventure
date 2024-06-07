@@ -16,12 +16,40 @@ ABaseEnemy::ABaseEnemy()
 
 FPatrolPoint ABaseEnemy::TakeRandomPatrolPoint()
 {
-	//TODO: Make it more random
-	const int32 PatrolPathLength = PatrolPath.Num();
-	const int32 Selection = FMath::RandRange(0, PatrolPathLength - 1);
+	TArray<FPatrolPoint> NewPatrolPath;
+	for (const FPatrolPoint& Patrol : PatrolPath)
+	{
+		if (CurrentPatrolPoint != Patrol.PatrolPoint)
+		{
+			NewPatrolPath.Add(Patrol);
+		}
+	}
 
-	CurrentPatrolPointIndex = Selection;
-	return PatrolPath[Selection];
+	const int32 PatrolPathLength = NewPatrolPath.Num();
+	const int32 Selection = FMath::RandRange(0, PatrolPathLength - 1);
+	const FPatrolPoint CurrentPatrol = NewPatrolPath[Selection];
+	CurrentPatrolPoint = CurrentPatrol.PatrolPoint;
+
+	return CurrentPatrol;
 }
+
+
+void ABaseEnemy::SetCharacterWalkSpeed() const
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = MaxWalkSpeed;
+	}
+}
+
+void ABaseEnemy::SetCharacterChaseSpeed() const
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = MaxChaseSpeed;
+	}
+}
+
+
 
 

@@ -38,13 +38,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<FPatrolPoint> PatrolPath;
+	
+	UPROPERTY()
+	TObjectPtr<AActor> CurrentPatrolPoint;
 
-	UPROPERTY(VisibleAnywhere)
-	int32 CurrentPatrolPointIndex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxWalkSpeed = 150.f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxChaseSpeed = 300.f;
+	
 	UFUNCTION(BlueprintCallable)
 	FPatrolPoint TakeRandomPatrolPoint();
+	
+	UFUNCTION(BlueprintCallable)
+	void SetCharacterWalkSpeed() const;
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE void SetCurrentPatrolPointIndex(const int32 PatrolPointIndex) {CurrentPatrolPointIndex = PatrolPointIndex;}
+	void SetCharacterChaseSpeed() const;
 };
